@@ -252,10 +252,12 @@ def main(argv):
    print('Command is: ', cmd)
    print('Branch is: ', git_branch)
    print(info_end)
+
    if tag_name not in tags_list:
        print(YELL + 'WARNING: Tag name not in tag list !!! ' + NC )
-   # print(tags_list)
-   folders_paths = find_paths_by_tag(tag_name,tags_list)
+
+   folders_paths = sorted(set(find_paths_by_tag(tag_name,tags_list)))
+
 
    if cmd == 'list':
        for folder in folders_paths :
