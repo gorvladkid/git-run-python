@@ -1,0 +1,77 @@
+NAME
+       gr - multiply git usage helper
+
+SYNOPSIS
+       gr  [-h --help][-l --list][-f <config file> --config-path[=<grconfig>]]
+           [-c <cmd> --command[='<value>']][-b <branch> --branch[=<value>]]
+           [-m '<msg>' --message[='<value>']] [-t <tag> --tag[=<tag>]]
+
+       gr -t <tag> -f <config file> -c "<command>" -b <branch> -m "<message>"
+
+DESCRIPTION
+       Copy of nodejs Git-run project writed at python .
+
+OPTIONS
+
+       -h --help
+           Prints the synopsis and a list of the most commonly used commands.
+
+       -l --list
+           Show list of repo's by tag
+
+       -t <tag> --tag=<tag name>
+           Use it for choose tag that you wanna use for run git commands
+
+       -f <path> --config-path=<grconfig path>
+           Path of grconfig.json file writed in json format. By default it's ${HOME}/.grconfig.json
+
+       -c <bash command> or <git commands> --command=<cmd>
+           Git or bash commands thant you wanna use for each repo in list
+
+       -b <branch name> --branch=<branch name>
+           Git branch name. This parameter can be used with commands like [checkout]
+
+
+
+GIT COMMANDS
+       You can use couple default git commands with -c option for more quick work.
+
+   Commands
+       help
+           Show you a help message a same as -h option.
+            gr -t <tag> -c help
+            gr -h
+            gr --help
+
+       list
+           Show a list of repo that was in tag array
+            gr -t <tag> -l
+            gr -t <tag> --list
+            gr -t <tag> -c list
+
+       fetch
+           Allow u run git fetch command
+            gr -t <tag> -c fetch
+            gr -t <tag> -c 'git fatch'
+
+       pull
+           Allow u run git pull command
+            gr -t <tag> -c pull
+            gr -t <tag> -c 'git pull'
+
+       push
+           Allow u run git push command
+            gr -t <tag> -c push
+            gr -t <tag> -c 'git push'
+
+       checkout
+           Allow you checkout to the other branch or create a new one
+            gr -t <tag> -c checkout -b <branch>
+            gr -t <tag> -c 'git checkout <brnach>'
+            gr -t <tag> -c 'git checkout -b <brnach>'
+
+       status
+           Show status for each updated repo in list
+            gr -t <tag> -c status
+           Output have a difference with this command
+            gr -t <tag> -c 'git status'
