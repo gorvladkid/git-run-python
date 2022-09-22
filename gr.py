@@ -188,6 +188,7 @@ def execute_command(paths,command,branch):
                 print(GREEN + command + ": " + NC + folder_path )
                 cmd = ['bash','-c', 'cd ' + folder_path + ' /usr/bin/git ' + command ]
                 r = subprocess.run(cmd, check=True, capture_output=True, encoding="utf8")
+                print(r.stdout)
             except subprocess.CalledProcessError as e:
                 print(RED + "error: " + NC + folder_path )
                 errors_msg.append("Repo: " + RED + folder_path + NC)
