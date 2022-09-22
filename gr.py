@@ -178,10 +178,27 @@ def execute_command(paths,command,branch):
     if len(branch) == 0 :
         print(YELL + "WARNING: Branch name is empty !!! " + NC + "\n")
 
-    if command == "pull" or command == "push" or command == "fetch":
+    if command == "pull" or command == "push" or command == "fetch" or command == "diff":
+
+        errors_msg = []
         for path in paths:
-            folder_path = subprocess.check_output(['bash','-c','echo ' + path ])
-            subprocess.check_call(['bash','-c', 'cd ' + folder_path.decode('utf-8') + ' /usr/bin/git ' + command ]);
+            try:
+                r = ""
+                folder_path = subprocess.check_output(['bash','-c','echo ' + path ], encoding="utf8")
+                print(GREEN + command + ": " + NC + folder_path )
+                cmd = ['bash','-c', 'cd ' + folder_path + ' /usr/bin/git ' + command ]
+                r = subprocess.run(cmd, check=True, capture_output=True, encoding="utf8")
+            except subprocess.CalledProcessError as e:
+                print(RED + "error: " + NC + folder_path )
+                errors_msg.append("Repo: " + RED + folder_path + NC)
+                errors_msg.append(e.stderr)
+
+        if not errors_msg == []:
+            print(RED + "\n############### ERROR ############## \n" + NC)
+            for error in errors_msg:
+                print(error)
+            print(RED + "\n#################################### \n" + NC)
+
     elif command == "status" :
         get_status(paths)
     elif command == "checkout":
@@ -190,11 +207,25 @@ def execute_command(paths,command,branch):
     # elif command =="clone":
     #     clone_multi_repo(tag)
     else:
+        errors_msg = []
         for path in paths:
-            folder_path = subprocess.check_output(['bash','-c','echo ' + path ])
-            print("")
-            print(folder_path.decode('utf-8'))
-            subprocess.check_call(['bash','-c', 'cd ' + folder_path.decode('utf-8') + command ])
+            try:
+                r = ""
+                folder_path = subprocess.check_output(['bash','-c','echo ' + path ], encoding="utf8")
+                print(GREEN + command + ": " + NC + folder_path )
+                cmd = ['bash','-c', 'cd ' + folder_path + command ]
+                r = subprocess.run(cmd, check=True, capture_output=True, encoding="utf8")
+                print(r.stdout)
+            except subprocess.CalledProcessError as e:
+                print(RED + "error: " + NC + folder_path )
+                errors_msg.append("Repo: " + RED + folder_path + NC)
+                errors_msg.append(e.stderr)
+
+        if not errors_msg == []:
+            print(RED + "\n############### ERROR ############## \n" + NC)
+            for error in errors_msg:
+                print(error)
+            print(RED + "\n#################################### \n" + NC)
 
 # def gets_json()
 def main(argv):

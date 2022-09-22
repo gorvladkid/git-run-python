@@ -50,7 +50,7 @@
        fetch
            Allow u run git fetch command
             gr -t <tag> -c fetch
-            gr -t <tag> -c 'git fatch'
+            gr -t <tag> -c 'git fetch'
 
        pull
            Allow u run git pull command
